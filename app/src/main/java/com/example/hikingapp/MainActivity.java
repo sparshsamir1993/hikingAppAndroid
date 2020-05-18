@@ -13,6 +13,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1000, locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
                 }
             }
 
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 String latitude = "Latitude :: " + location.getLatitude();
                 String longitude = "Longitude :: " + location.getLongitude();
+
+                Log.i("Location is ---- ", location.toString());
 
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 1000, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
         }
 
 
